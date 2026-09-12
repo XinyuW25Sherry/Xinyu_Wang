@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>王馨语 | Wang Xinyu</title>
+<meta name="description" content="王馨语 — 复旦大学国际商务硕士，西南财经大学金融学本科。数据分析、海外运营、飞盘社群创办经历。">
+<meta name="author" content="王馨语 Wang Xinyu">
+
+<!-- 分享到微信 / 领英时显示的卡片信息 -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="王馨语 | Wang Xinyu">
+<meta property="og:description" content="复旦大学国际商务硕士 · 西南财经大学金融学本科">
+<meta property="og:locale" content="zh_CN">
+
+<!-- 「王」字图标，已内联成 data URI，无需额外图片文件 -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%2312305c'/%3E%3Cg stroke='%23ffffff' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M32 19v26' opacity='.5'/%3E%3Cpath d='M17 19h30'/%3E%3Cpath d='M21 32h22'/%3E%3C/g%3E%3Cpath d='M14 45h36' stroke='%23e2650d' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<!-- 手机浏览器地址栏配色，跟随深浅色 -->
+<meta name="theme-color" content="#12305c" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c1420" media="(prefers-color-scheme: dark)">
+
+<style>
+/* ==========================================================================
+   王馨语 · 个人网站
+   单文件版：CSS 与 JS 全部内联，无任何外部依赖、无网络请求
+   字体使用系统字体栈（不加载 Google Fonts，国内访问快）
+   ========================================================================== */
+
+/* ---------- 1. 设计变量 ---------- */
+:root {
+  --bg:          #ffffff;
+  --bg-soft:     #f5f8fc;
+  --text:        #101d31;
+  --text-soft:   #4a5768;
+  --text-mute:   #7d8899;
+  --line:        #e2e7f0;
+  --line-strong: #cbd4e2;
+
+  /* 深蓝：主色，用在标题、导航等结构性元素上 */
+  --navy:        #12305c;
+  --navy-soft:   #eaf0f9;
+  --navy-bg:     #12305c;   /* 当作底色大面积使用时（页脚） */
+  /* 橙：点缀色，只用在细小但需要跳出来的地方 */
+  --accent:      #e2650d;
+  --accent-soft: #fdf1e7;
+
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong",
+                "SimSun", Georgia, "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC",
+                "Helvetica Neue", Arial, sans-serif;
+
+  --wrap:  880px;
+  --radius: 3px;
+  --nav-h: 60px;
+  --ease:  cubic-bezier(.22, .61, .36, 1);
+}
+
+/* 深色模式 */
+[data-theme="dark"] {
+  --bg:          #0c1420;
+  --bg-soft:     #121c2c;
+  --text:        #e8edf5;
+  --text-soft:   #a3b0c2;
+  --text-mute:   #7a8ba1;
+  --line:        #1f2c42;
+  --line-strong: #30405a;
+  --navy:        #9dbdea;
+  --navy-soft:   #152740;
+  --navy-bg:     #101d33;
+  --accent:      #ff8f45;
+  --accent-soft: #38220f;
+}
+[data-theme="dark"] .hero-avatar .avatar-frame { background: #16233a; }
+
+/* ---------- 2. 基础重置 ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color .25s var(--ease), color .25s var(--ease);
+}
+
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; margin: 0; }
+p  { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+a  { color: inherit; text-decoration: none; }
+svg { fill: none; stroke: currentColor; stroke-width: 1.7; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+
+/* 语言切换：默认只显示当前语言 */
+html[data-lang="zh"] .en { display: none; }
+html[data-lang="en"] .zh { display: none; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--navy-bg); color: #fff; padding: 10px 16px; border-radius: var(--radius);
+}
+.skip-link:focus { left: 12px; top: 12px; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+/* ---------- 3. 顶部导航 ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--nav-h);
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+  transition: border-color .25s var(--ease), background-color .25s var(--ease);
+}
+.nav.is-scrolled { border-bottom-color: var(--line); }
+
+.nav-inner {
+  max-width: var(--wrap); height: 100%; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; gap: 20px;
+}
+
+.nav-brand {
+  font-family: var(--font-serif);
+  font-size: 17px; font-weight: 600; letter-spacing: .02em;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 4px;
+  margin-left: auto; overflow-x: auto; scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-links a {
+  position: relative;
+  padding: 6px 11px; border-radius: var(--radius);
+  font-size: 14px; color: var(--text-soft); white-space: nowrap;
+  transition: color .18s var(--ease), background-color .18s var(--ease);
+}
+.nav-links a:hover { color: var(--text); background: var(--bg-soft); }
+.nav-links a.is-active { color: var(--navy); font-weight: 600; }
+.nav-links a.is-active::after {
+  content: ""; position: absolute; left: 11px; right: 11px; bottom: 0;
+  height: 2px; background: var(--accent); border-radius: 2px;
+}
+
+.nav-actions { display: flex; align-items: center; gap: 6px; }
+
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; padding: 0;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: transparent; color: var(--text-soft); cursor: pointer;
+  font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; letter-spacing: .03em;
+  transition: color .18s var(--ease), border-color .18s var(--ease), background-color .18s var(--ease);
+}
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+
+[data-theme="light"] .icon-moon { display: none; }
+[data-theme="dark"]  .icon-sun  { display: none; }
+
+/* ---------- 4. 首屏 ---------- */
+.hero { padding: calc(var(--nav-h) + 68px) 0 76px; }
+
+.hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start; }
+
+.hero-name { font-size: clamp(34px, 5.2vw, 46px); line-height: 1.18; letter-spacing: .01em; margin-bottom: 14px; color: var(--navy); }
+.hero-name::after {
+  content: ""; display: block;
+  width: 46px; height: 3px; margin-top: 18px;
+  background: var(--accent); border-radius: 2px;
+}
+
+.hero-title { font-size: 17px; color: var(--navy); font-weight: 500; margin-bottom: 18px; letter-spacing: .01em; }
+
+.hero-sub { max-width: 54ch; color: var(--text-soft); font-size: 15.5px; line-height: 1.85; margin-bottom: 26px; }
+
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-bottom: 26px; }
+.hero-meta li { display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; color: var(--text-soft); }
+.hero-meta svg { color: var(--text-mute); flex: none; }
+.hero-meta a { border-bottom: 1px solid transparent; transition: border-color .18s var(--ease), color .18s var(--ease); }
+.hero-meta a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  display: inline-block; padding: 4px 11px;
+  font-size: 13px; color: var(--text-soft);
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 100px;
+}
+
+.hero-avatar { width: 168px; }
+.avatar-frame {
+  width: 168px; height: 202px;
+  border: 1px solid var(--line); border-radius: 4px;
+  background: var(--bg-soft); color: var(--accent);
+  overflow: hidden; display: flex; align-items: center; justify-content: center;
+}
+.avatar-frame svg, .avatar-frame img { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+/* ---------- 5. 通用区块 ---------- */
+.section { padding: 66px 0; border-top: 1px solid var(--line); }
+.section-alt { background: var(--bg-soft); }
+
+.section-title {
+  font-size: 22px; letter-spacing: .04em; color: var(--navy);
+  margin-bottom: 34px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-strong);
+  display: flex; align-items: baseline; gap: 12px;
+}
+.section-title::before {
+  content: ""; flex: none;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent); transform: translateY(-4px);
+}
+
+/* ---------- 6. 时间轴条目 ---------- */
+.timeline { position: relative; }
+.timeline::before {
+  content: ""; position: absolute;
+  left: 3px; top: 10px; bottom: 10px;
+  width: 1px; background: var(--line);
+}
+
+.item { position: relative; padding-left: 30px; padding-bottom: 34px; }
+.item:last-child { padding-bottom: 0; }
+.item::before {
+  content: ""; position: absolute; left: 0; top: 10px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--accent);
+}
+.section-alt .item::before { background: var(--bg-soft); }
+
+.item-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 10px; }
+.item-org { font-size: 17px; line-height: 1.45; letter-spacing: .01em; margin-bottom: 4px; }
+.item-role { font-size: 14.5px; color: var(--text-soft); }
+
+.item-date {
+  flex: none; font-size: 13.5px; color: var(--text-mute);
+  font-variant-numeric: tabular-nums; white-space: nowrap; padding-top: 3px;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+.chip {
+  display: inline-block; padding: 2px 9px;
+  font-size: 12.5px; line-height: 1.7; border-radius: var(--radius);
+  border: 1px solid var(--line-strong); color: var(--text-soft); background: var(--bg);
+}
+.chip-accent {
+  color: var(--navy); background: var(--navy-soft);
+  border-color: var(--line-strong); font-weight: 500;
+}
+
+.bullets li {
+  position: relative; padding-left: 16px;
+  font-size: 15px; line-height: 1.82; color: var(--text-soft); margin-bottom: 10px;
+}
+.bullets li:last-child { margin-bottom: 0; }
+.bullets li::before {
+  content: ""; position: absolute; left: 0; top: .78em;
+  width: 4px; height: 4px; border-radius: 50%; background: var(--line-strong);
+}
+.bullets strong { color: var(--text); font-weight: 600; }
+
+/* ---------- 7. 技能卡片 ---------- */
+.skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); gap: 20px; }
+.skill-card {
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line); border-radius: 4px; background: var(--bg);
+  transition: border-color .2s var(--ease), transform .2s var(--ease);
+}
+.skill-card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+
+.skill-label {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 15px; letter-spacing: .02em; color: var(--navy); margin-bottom: 11px;
+}
+.skill-label svg { flex: none; }
+.skill-card p { font-size: 14.5px; line-height: 1.8; color: var(--text-soft); }
+
+/* ---------- 8. 四宫格导航 ---------- */
+/* 紧接首屏基本信息，所以去掉上边框和上间距，视觉上归属「介绍」这一块 */
+.section.quicknav { padding-top: 0; border-top: 0; }
+
+.quicknav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+.qn-card {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line); border-radius: 4px;
+  background: var(--bg); overflow: hidden;
+  transition: border-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.qn-card:hover {
+  border-color: var(--accent); transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .07);
+}
+
+.qn-media {
+  display: block; aspect-ratio: 4 / 3;
+  overflow: hidden; background: var(--bg-soft);
+  border-bottom: 1px solid var(--line);
+}
+.qn-media img {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+  transition: transform .55s var(--ease);
+}
+.qn-card:hover .qn-media img { transform: scale(1.045); }
+
+.qn-body { display: flex; align-items: center; gap: 12px; padding: 15px 18px 17px; }
+.qn-text { min-width: 0; }
+.qn-title { display: block; font-family: var(--font-serif); font-size: 16.5px; letter-spacing: .02em; color: var(--navy); }
+.qn-desc  { display: block; font-size: 13.5px; line-height: 1.6; color: var(--text-mute); margin-top: 3px; }
+
+.qn-arrow {
+  flex: none; margin-left: auto; color: var(--text-mute);
+  transition: color .2s var(--ease), transform .2s var(--ease);
+}
+.qn-card:hover .qn-arrow { color: var(--accent); transform: translateX(3px); }
+
+/* 四宫格下方的技能 / 爱好说明 */
+.qn-note {
+  margin-top: 22px; padding: 22px 24px 24px;
+  border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 4px; background: var(--bg-soft);
+}
+.qn-note-title { font-size: 15.5px; letter-spacing: .02em; color: var(--navy); margin-bottom: 15px; }
+
+.qn-rows { display: grid; gap: 11px; margin: 0; }
+.qn-row { display: grid; grid-template-columns: 84px 1fr; gap: 16px; align-items: start; }
+.qn-row dt { font-size: 14px; font-weight: 600; color: var(--navy); }
+.qn-row dd { margin: 0; font-size: 14.5px; line-height: 1.8; color: var(--text-soft); }
+.qn-row dd a {
+  border-bottom: 1px solid var(--line-strong);
+  transition: color .18s var(--ease), border-color .18s var(--ease);
+}
+.qn-row dd a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ---------- 9. 页脚 ---------- */
+.footer {
+  padding: 34px 0; font-size: 13.5px;
+  background: var(--navy-bg); color: rgba(255, 255, 255, .72);
+  border-top: 3px solid var(--accent);
+}
+.footer-inner { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; align-items: center; }
+.footer-links a {
+  color: rgba(255, 255, 255, .9); border-bottom: 1px solid rgba(255, 255, 255, .35);
+  transition: color .18s var(--ease), border-color .18s var(--ease);
+}
+.footer-links a:hover { color: #fff; border-bottom-color: var(--accent); }
+
+/* ---------- 10. 回到顶部 ---------- */
+.to-top {
+  position: fixed; right: 26px; bottom: 26px; z-index: 90;
+  width: 42px; height: 42px; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: var(--bg); color: var(--text-soft);
+  cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity .25s var(--ease), transform .25s var(--ease),
+              visibility .25s var(--ease), color .18s var(--ease), border-color .18s var(--ease);
+}
+.to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- 11. 滚动进场动效 ---------- */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s var(--ease), transform .55s var(--ease); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* ---------- 12. 响应式 ---------- */
+@media (max-width: 760px) {
+  .wrap, .nav-inner { padding: 0 20px; }
+
+  .hero { padding: calc(var(--nav-h) + 44px) 0 54px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+  .hero-avatar { order: -1; width: 108px; }
+  .avatar-frame { width: 108px; height: 130px; }
+
+  /* 手机上导航改成底部固定条 */
+  .nav-links {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    height: 52px; margin: 0; padding: 0 14px;
+    gap: 2px; justify-content: flex-start;
+    background: var(--bg); border-top: 1px solid var(--line); z-index: 99;
+  }
+  .nav-links a { padding: 6px 9px; font-size: 13.5px; }
+  .nav-links a.is-active::after { left: 9px; right: 9px; }
+
+  body { padding-bottom: 52px; }
+  .to-top { right: 18px; bottom: 70px; }
+
+  .section { padding: 48px 0; }
+  .section-title { font-size: 19px; margin-bottom: 26px; }
+
+  .item-head { flex-direction: column; gap: 4px; }
+  .item-date { padding-top: 0; }
+  .item { padding-left: 24px; }
+
+  /* 四宫格手机上仍是 2×2，只压缩留白和字号 */
+  .quicknav-grid { gap: 12px; }
+  .qn-body { padding: 12px 13px 14px; gap: 8px; }
+  .qn-title { font-size: 14.5px; }
+  .qn-desc { font-size: 12px; }
+  .qn-arrow { display: none; }
+  .qn-note { margin-top: 16px; padding: 18px 18px 20px; }
+  .qn-note-title { font-size: 14.5px; margin-bottom: 12px; }
+  .qn-row { grid-template-columns: 1fr; gap: 3px; }
+
+  .skill-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* ---------- 13. 无障碍：减少动效 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* ---------- 14. 打印：Ctrl+P 可直接存成 PDF 简历 ---------- */
+@media print {
+  :root { --bg: #fff; --bg-soft: #fff; --text: #000; --text-soft: #333; --line: #ccc; --navy: #000; --accent: #000; }
+  .nav, .to-top, .footer, .skip-link, .hero-tags, .quicknav { display: none !important; }
+  body { font-size: 11pt; line-height: 1.55; padding: 0; }
+  .hero { padding: 0 0 16pt; }
+  .hero-grid { grid-template-columns: 1fr; gap: 0; }
+  .hero-avatar { display: none; }
+  .hero-name::after { display: none; }
+  .section { padding: 12pt 0; border-top: 1px solid #ccc; break-inside: avoid; }
+  .section-alt { background: #fff; }
+  .item, .skill-card { break-inside: avoid; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  a { border: none !important; }
+}
+</style>
+
+<!-- 在首帧绘制前套用已保存的主题和语言，避免刷新时闪白 / 闪中文 -->
+<script>
+  try {
+    var t = localStorage.getItem('theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+    var l = localStorage.getItem('lang');
+    if (l) {
+      document.documentElement.setAttribute('data-lang', l);
+      document.documentElement.setAttribute('lang', l === 'en' ? 'en' : 'zh-CN');
+    }
+  } catch (e) {}
+</script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">
+  <span class="zh">跳到正文</span><span class="en">Skip to content</span>
+</a>
+
+<!-- ============ 顶部导航 ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#top">
+      <span class="zh">王馨语</span><span class="en">Wang Xinyu</span>
+    </a>
+
+    <nav class="nav-links" aria-label="页面导航">
+      <a href="#education"><span class="zh">教育</span><span class="en">Education</span></a>
+      <a href="#experience"><span class="zh">实习</span><span class="en">Experience</span></a>
+      <a href="#competitions"><span class="zh">竞赛</span><span class="en">Competitions</span></a>
+      <a href="#leadership"><span class="zh">社团</span><span class="en">Leadership</span></a>
+      <a href="#skills"><span class="zh">技能</span><span class="en">Skills</span></a>
+    </nav>
+
+    <div class="nav-actions">
+      <button id="lang-toggle" class="icon-btn" type="button" aria-label="切换语言" title="中 / EN">
+        <span class="lang-label"></span>
+      </button>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="切换深浅色" title="Theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <g stroke-linecap="round">
+            <path d="M12 2.4v2.6M12 19v2.6M2.4 12h2.6M19 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/>
+          </g>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+          <path d="M20.5 14.3A8.6 8.6 0 1 1 9.7 3.5a6.8 6.8 0 0 0 10.8 10.8Z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ 首屏 ============ -->
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <h1 class="hero-name">
+          <span class="zh">王馨语</span><span class="en">Wang Xinyu</span>
+        </h1>
+
+        <p class="hero-title">
+          <span class="zh">复旦大学 · 国际商务硕士在读</span>
+          <span class="en">M.A. in International Business, Fudan University</span>
+        </p>
+
+        <p class="hero-sub">
+          <span class="zh">金融学本科背景，做过海外资产盘点与用工成本调研，也创办过校园飞盘协会和省级高校赛事。擅长把杂乱的数据整理成能支撑决策的结论。</span>
+          <span class="en">Finance graduate turned international-business master's student. I have audited overseas assets and researched staffing costs, and I founded both a campus frisbee association and a provincial collegiate tournament. What I do best is turning messy data into conclusions a decision can rest on.</span>
+        </p>
+
+        <ul class="hero-meta">
+          <li>
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6.5 9 6.5 9-6.5"/></svg>
+            <a href="mailto:111@m.fudan.edu.cn">111@m.fudan.edu.cn</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 21.5s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10.5" r="2.6"/></svg>
+            <span class="zh">成都</span><span class="en">Chengdu, China</span>
+          </li>
+          <!-- 手机号默认未公开：公开网页会被搜索引擎和爬虫抓取，容易招骚扰电话。
+               如需展示，把下面整段 li 两侧的注释标记去掉即可。 -->
+
+          <!--
+          <li>
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M6.5 3.5h3l1.6 4-2 1.4a12 12 0 0 0 6 6l1.4-2 4 1.6v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7 2 2 0 0 1 6.5 3.5Z"/></svg>
+            <a href="tel:17882211626">17882211626</a>
+          </li>
+          -->
+        </ul>
+
+        <div class="hero-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Stata</span>
+          <span class="tag">Excel</span>
+          <span class="tag">Photoshop</span>
+          <span class="tag"><span class="zh">数据分析</span><span class="en">Data Analysis</span></span>
+          <span class="tag"><span class="zh">雅思 6.5</span><span class="en">IELTS 6.5</span></span>
+        </div>
+      </div>
+
+      <div class="hero-avatar">
+        <!-- 头像取自简历右上角的证件照，已裁切为 assets/avatar.jpg（500×576）
+             换图时保持竖版、比例约 5:6，覆盖同名文件即可 -->
+        <div class="avatar-frame">
+          <img src="assets/avatar.jpg" alt="王馨语" width="500" height="576">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 四宫格导航 ============ -->
+  <!-- 照片放在 assets/ 下，覆盖同名文件即可换图；建议横版、比例 4:3、宽度 1200px 以上 -->
+  <section class="section quicknav" id="explore">
+    <div class="wrap">
+      <div class="quicknav-grid">
+
+        <a class="qn-card reveal" href="#education">
+          <span class="qn-media">
+            <img src="assets/campus.jpg" alt="复旦大学校园风景" width="1200" height="900" loading="lazy">
+          </span>
+          <span class="qn-body">
+            <span class="qn-text">
+              <span class="qn-title"><span class="zh">教育背景</span><span class="en">Education</span></span>
+              <span class="qn-desc">
+                <span class="zh">复旦大学 · 西南财经大学</span>
+                <span class="en">Fudan University · SWUFE</span>
+              </span>
+            </span>
+            <svg class="qn-arrow" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M5 12h13M12.5 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a class="qn-card reveal" href="#experience">
+          <span class="qn-media">
+            <img src="assets/office.jpg" alt="办公场所" width="1200" height="900" loading="lazy">
+          </span>
+          <span class="qn-body">
+            <span class="qn-text">
+              <span class="qn-title"><span class="zh">实习经历</span><span class="en">Experience</span></span>
+              <span class="qn-desc">
+                <span class="zh">小米科技 · 海外职场管理部</span>
+                <span class="en">Xiaomi · Overseas Workplace Mgmt.</span>
+              </span>
+            </span>
+            <svg class="qn-arrow" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M5 12h13M12.5 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a class="qn-card reveal" href="#competitions">
+          <span class="qn-media">
+            <img src="assets/teamwork.jpg" alt="小组作业" width="1200" height="900" loading="lazy">
+          </span>
+          <span class="qn-body">
+            <span class="qn-text">
+              <span class="qn-title"><span class="zh">学术竞赛</span><span class="en">Competitions</span></span>
+              <span class="qn-desc">
+                <span class="zh">挑战杯 · 国家级大创 · 营销策划</span>
+                <span class="en">Challenge Cup · National Program</span>
+              </span>
+            </span>
+            <svg class="qn-arrow" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M5 12h13M12.5 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a class="qn-card reveal" href="#leadership">
+          <span class="qn-media">
+            <img src="assets/frisbee.jpg" alt="极限飞盘比赛" width="1200" height="900" loading="lazy">
+          </span>
+          <span class="qn-body">
+            <span class="qn-text">
+              <span class="qn-title"><span class="zh">社团经历</span><span class="en">Leadership</span></span>
+              <span class="qn-desc">
+                <span class="zh">盘客飞盘协会 · 炽茶高校赛</span>
+                <span class="en">Frisbee Association · Chicha Cup</span>
+              </span>
+            </span>
+            <svg class="qn-arrow" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M5 12h13M12.5 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+      </div>
+
+      <!-- 四宫格下方：技能、爱好等其他信息一览 -->
+      <div class="qn-note reveal">
+        <h2 class="qn-note-title">
+          <span class="zh">技能、个人爱好及其他</span>
+          <span class="en">Skills, Interests &amp; More</span>
+        </h2>
+        <dl class="qn-rows">
+          <div class="qn-row">
+            <dt><span class="zh">技能</span><span class="en">Skills</span></dt>
+            <dd>
+              <span class="zh">熟练运用 Office、Python、Stata、Photoshop；擅长数据分析、文案撰写、视觉设计、自媒体宣发。</span>
+              <span class="en">Proficient in Office, Python, Stata and Photoshop; strong in data analysis, copywriting, visual design and social-media outreach.</span>
+            </dd>
+          </div>
+          <div class="qn-row">
+            <dt><span class="zh">语言</span><span class="en">Languages</span></dt>
+            <dd>
+              <span class="zh">英语：雅思 6.5 分，CET-6 571 分；第二届中译杯演讲大赛成都市一等奖。</span>
+              <span class="en">English: IELTS 6.5; CET-6 571. First Prize, Chengdu Division, 2nd China Translation Cup Speech Contest.</span>
+            </dd>
+          </div>
+          <div class="qn-row">
+            <dt><span class="zh">个人爱好</span><span class="en">Interests</span></dt>
+            <dd>
+              <span class="zh">极限飞盘（2022 年成都极限飞盘公开赛亚军）、素描（2022 年第十五届全国青少年书画大赛成年组金奖）。</span>
+              <span class="en">Ultimate frisbee (Runner-up, 2022 Chengdu Ultimate Open); sketching (Gold Award, Adult Group, 15th National Youth Calligraphy and Painting Competition, 2022).</span>
+            </dd>
+          </div>
+          <div class="qn-row">
+            <dt><span class="zh">联系方式</span><span class="en">Contact</span></dt>
+            <dd>
+              <a href="mailto:111@m.fudan.edu.cn">111@m.fudan.edu.cn</a>
+              <span class="zh">　·　成都</span><span class="en">　·　Chengdu, China</span>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 教育经历 ============ -->
+  <section class="section" id="education">
+    <div class="wrap">
+      <h2 class="section-title">
+        <span class="zh">教育经历</span><span class="en">Education</span>
+      </h2>
+
+      <div class="timeline">
+        <article class="item reveal">
+          <div class="item-head">
+            <div>
+              <h3 class="item-org">
+                <span class="zh">复旦大学</span><span class="en">Fudan University</span>
+              </h3>
+              <p class="item-role">
+                <span class="zh">国际商务 · 硕士 · 经济学院 · 全日制</span>
+                <span class="en">M.A. in International Business · School of Economics · Full-time</span>
+              </p>
+            </div>
+            <p class="item-date"><time>2026.09 – 2028.06</time></p>
+          </div>
+          <div class="chips"><span class="chip chip-accent">C9</span></div>
+        </article>
+
+        <article class="item reveal">
+          <div class="item-head">
+            <div>
+              <h3 class="item-org">
+                <span class="zh">西南财经大学</span>
+                <span class="en">Southwestern University of Finance and Economics</span>
+              </h3>
+              <p class="item-role">
+                <span class="zh">金融学（双语实验班）· 本科 · 全日制</span>
+                <span class="en">B.A. in Finance (Bilingual Experimental Class) · Full-time</span>
+              </p>
+            </div>
+            <p class="item-date"><time>2021.09 – 2025.06</time></p>
+          </div>
+          <div class="chips">
+            <span class="chip chip-accent">211</span>
+            <span class="chip chip-accent"><span class="zh">双一流</span><span class="en">Double First-Class</span></span>
+          </div>
+          <ul class="bullets">
+            <li>
+              <span class="zh"><strong>均绩 86</strong>　主要课程：公司金融、货币金融学、投资学、计量经济学、国际金融学。</span>
+              <span class="en"><strong>GPA 86/100</strong>　Core courses: Corporate Finance, Money and Banking, Investments, Econometrics, International Finance.</span>
+            </li>
+            <li>
+              <span class="zh">校级三好学生、文体奖学金。</span>
+              <span class="en">University-level Merit Student; Arts &amp; Sports Scholarship.</span>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 实习经历 ============ -->
+  <section class="section section-alt" id="experience">
+    <div class="wrap">
+      <h2 class="section-title">
+        <span class="zh">实习经历</span><span class="en">Internship Experience</span>
+      </h2>
+
+      <div class="timeline">
+        <article class="item reveal">
+          <div class="item-head">
+            <div>
+              <h3 class="item-org">
+                <span class="zh">小米科技有限责任公司</span>
+                <span class="en">Xiaomi Technology Co., Ltd.</span>
+              </h3>
+              <p class="item-role">
+                <span class="zh">海外职场管理部 · 实习生</span>
+                <span class="en">Overseas Workplace Management Department · Intern</span>
+              </p>
+            </div>
+            <p class="item-date"><time>2025.05 – 2025.06</time></p>
+          </div>
+
+          <ul class="bullets">
+            <li>
+              <span class="zh"><strong>主导海外资产全周期盘点</strong>：推进 2025 年度海外员工固定资产盘点项目，完成 7,000 余项固定资产的数据清洗与交叉验证，覆盖资产总额达 1.3 亿元；通过建立异常识别规则，精准定位并处置 4% 的账实不符记录，输出标准化盘点分析报告，为海外资产配置优化提供数据支撑。</span>
+              <span class="en"><strong>Led full-cycle overseas asset auditing.</strong> Drove the 2025 overseas employee fixed-asset audit, cleaning and cross-validating 7,000+ asset records covering RMB 130M in total value. Built anomaly-detection rules that pinpointed and resolved 4% book-to-physical discrepancies, then delivered a standardized audit report supporting overseas asset-allocation decisions.</span>
+            </li>
+            <li>
+              <span class="zh"><strong>构建海外用工与成本调研体系</strong>：基于摩洛哥当地物价指数与消费结构调研，独立编制 3 份员工食堂预算测算报告，实现成本预估偏差率控制在 5% 以内；系统评估 4 家海外人力资源服务商的服务能力与报价模型，针对蓝领外派等特殊用工场景形成专项调研报告，为海外用工策略制定提供决策依据。</span>
+              <span class="en"><strong>Built an overseas staffing and cost-research framework.</strong> Drawing on local price indices and consumption-structure research in Morocco, independently produced 3 employee-canteen budget models with cost-estimate deviation held under 5%. Systematically evaluated the service capabilities and pricing models of 4 overseas HR service providers, and delivered a dedicated report on special staffing scenarios such as blue-collar expatriate assignment to inform overseas employment strategy.</span>
+            </li>
+            <li>
+              <span class="zh"><strong>优化海外行政运营支持流程</strong>：累计整理 7 场跨部门会议纪要并提炼关键行动项，动态维护 6 份海外职场 SOP 文档，推动行政流程标准化率提升 30%。</span>
+              <span class="en"><strong>Optimized overseas administrative operations.</strong> Documented 7 cross-departmental meetings with distilled action items and maintained 6 overseas workplace SOP documents, raising administrative process standardization by 30%.</span>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 学科竞赛 ============ -->
+  <section class="section" id="competitions">
+    <div class="wrap">
+      <h2 class="section-title">
+        <span class="zh">学科竞赛</span><span class="en">Academic Competitions</span>
+      </h2>
+
+      <div class="timeline">
+        <article class="item reveal">
+          <div class="item-head">
+            <div>
+              <h3 class="item-org">
+                <span class="zh">第十七届“挑战杯”四川省大学生课外学术科技作品竞赛</span>
+                <span class="en">17th "Challenge Cup" Sichuan Provincial College Student Extracurricular Academic Science and Technology Works Competition</span>
+              </h3>
+              <p class="item-role"><span class="zh">队员</span><span class="en">Team Member</span></p>
+            </div>
+            <p class="item-date"><time>2023.05 – 2023.08</time></p>
+          </div>
+          <div class="chips">
+            <span class="chip chip-accent"><span class="zh">四川省三等奖</span><span class="en">Provincial Third Prize</span></span>
+          </div>
+          <ul class="bullets">
+            <li>
+              <span class="zh">推进实践项目斩获四川省“挑战杯”三等奖，并获评大学生“三下乡”省级重点团队及西南财经大学优秀实践团队二等奖，在省级与校级双维度均实现高质量成果认证。</span>
+              <span class="en">Advanced the practice project to a Third Prize at the Sichuan "Challenge Cup," and secured recognition as a Provincial Key Team in the "Three Goes to the Countryside" program plus a Second Prize as an Outstanding Practice Team at SWUFE &mdash; quality-validated results at both provincial and university levels.</span>
+            </li>
+            <li>
+              <span class="zh">独立设计并执行问卷调研方案，统筹回收有效样本 200 余份；运用灰色预测模型与多重响应分析等定量统计工具完成数据深度挖掘，系统输出调研结论并撰写实践报告，为项目获得省级奖项提供核心数据支撑。</span>
+              <span class="en">Independently designed and executed the survey plan, coordinating 200+ valid responses; used quantitative tools including grey prediction models and multiple-response analysis for deep data mining, systematically producing research conclusions and practice reports that provided the core data backing for the provincial award.</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="item reveal">
+          <div class="item-head">
+            <div>
+              <h3 class="item-org">
+                <span class="zh">2022 年国家级创新创业训练计划项目</span>
+                <span class="en">2022 National Innovation and Entrepreneurship Training Program</span>
+              </h3>
+              <p class="item-role"><span class="zh">队员</span><span class="en">Team Member</span></p>
+            </div>
+            <p class="item-date"><time>2022.07 – 2023.06</time></p>
+          </div>
+          <div class="chips">
+            <span class="chip chip-accent"><span class="zh">国家 A 级项目</span><span class="en">National Grade-A Project</span></span>
+          </div>
+          <ul class="bullets">
+            <li>
+              <span class="zh">统筹校内两个学院团委学生会及一个学生社团的跨部门合作，推动项目获评国家 A 级项目，全平台累计曝光量近 3,000 次。</span>
+              <span class="en">Coordinated cross-departmental collaboration across two college student unions and one student club, helping the project earn a National Grade-A rating with nearly 3,000 cumulative impressions across platforms.</span>
+            </li>
+            <li>
+              <span class="zh">组织并吸引 80 余名学生参与校内实践，通过精细化运营与反馈机制实现 98% 的用户好评率，验证项目模式的可行性与可复制性。运用 6C 框架与词云分析深度开展市场调研与产品定位，主导完成实地走访与数据采集，并引入校外专业化市场指导，确保项目方案兼具理论深度与落地价值。</span>
+              <span class="en">Recruited 80+ students into on-campus programs and reached a 98% satisfaction rate through refined operations and feedback loops, validating the model's feasibility and replicability. Applied the 6C framework and word-cloud analysis to market research and product positioning, led field visits and data collection, and brought in external professional market guidance to keep the proposal both theoretically grounded and practically viable.</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="item reveal">
+          <div class="item-head">
+            <div>
+              <h3 class="item-org">
+                <span class="zh">第十九届西南财经大学营销策划大赛</span>
+                <span class="en">19th SWUFE Marketing Planning Competition</span>
+              </h3>
+              <p class="item-role"><span class="zh">队员</span><span class="en">Team Member</span></p>
+            </div>
+            <p class="item-date"><time>2021.10 – 2022.06</time></p>
+          </div>
+          <div class="chips">
+            <span class="chip chip-accent"><span class="zh">校级二等奖</span><span class="en">University Second Prize</span></span>
+          </div>
+          <ul class="bullets">
+            <li>
+              <span class="zh">主导市场数据全流程分析，运用 Excel 及 Python 清洗多源异构数据逾 2 万条，构建可视化看板，精准定位核心用户画像与消费趋势，为策略调整提供数据支撑。</span>
+              <span class="en">Led end-to-end market data analysis, cleaning 20,000+ records of multi-source heterogeneous data with Excel and Python and building visualization dashboards that pinpointed core user personas and consumption trends to guide strategy adjustments.</span>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 社团和组织经历 ============ -->
+  <section class="section section-alt" id="leadership">
+    <div class="wrap">
+      <h2 class="section-title">
+        <span class="zh">社团和组织经历</span><span class="en">Leadership &amp; Organizations</span>
+      </h2>
+
+      <div class="timeline">
+        <article class="item reveal">
+          <div class="item-head">
+            <div>
+              <h3 class="item-org">
+                <span class="zh">第一届“炽茶”成都高校飞盘分组赛</span>
+                <span class="en">1st "Chicha" Chengdu Collegiate Ultimate Frisbee Tournament</span>
+              </h3>
+              <p class="item-role"><span class="zh">联合创始人</span><span class="en">Co-founder</span></p>
+            </div>
+            <p class="item-date"><time>2023.04 – 2023.05</time></p>
+          </div>
+          <ul class="bullets">
+            <li>
+              <span class="zh">联合发起并统筹执行首届非营利性“炽茶”成都高校飞盘赛，覆盖省内 14 所高校，吸引 129 名选手报名参赛，实现报名费收入 13,343 元，赛后盈余 844 元全额注入第二届赛事启动基金，保障赛事可持续运营。</span>
+              <span class="en">Co-founded and orchestrated the inaugural non-profit "Chicha" Chengdu collegiate frisbee tournament, reaching 14 universities across the province and drawing 129 registered players. Generated RMB 13,343 in entry fees and channeled the full RMB 844 surplus into the second edition's seed fund to keep the event running sustainably.</span>
+            </li>
+            <li>
+              <span class="zh">深度参与 3 轮赞助商谈判与协商，独立完成赛事全周期收支规划及精细化账目管理，为赛事盈余目标的达成提供核心支撑。撰写赛事官方宣传推文并制定分发策略，发布后 7 日内阅读量突破 2,011 次，为后续品牌化运营奠定传播基础。</span>
+              <span class="en">Engaged deeply in 3 rounds of sponsor negotiation, independently owning full-cycle budgeting and granular bookkeeping that underpinned the event's surplus target. Wrote the official promotional article and set its distribution strategy, surpassing 2,011 reads within 7 days of publication and laying the communications groundwork for future brand-building.</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="item reveal">
+          <div class="item-head">
+            <div>
+              <h3 class="item-org">
+                <span class="zh">盘客飞盘协会</span><span class="en">Panke Frisbee Association</span>
+              </h3>
+              <p class="item-role">
+                <span class="zh">会长 · 创始人 · 校队队长</span>
+                <span class="en">President · Founder · Varsity Team Captain</span>
+              </p>
+            </div>
+            <p class="item-date"><time>2022.10 – 2023.06</time></p>
+          </div>
+          <div class="chips">
+            <span class="chip chip-accent"><span class="zh">新星社团</span><span class="en">Rising Star Club</span></span>
+          </div>
+          <ul class="bullets">
+            <li>
+              <span class="zh">获得体育学院及学院副教授支持成立协会，社团成立第一学年获评“新星社团”。负责项目宣传、活动策划和技术教学，截至 2025 年 10 月，社团 QQ 群成员已超 800 人。</span>
+              <span class="en">Founded the association with backing from the School of Sports Science and an associate professor, earning "Rising Star Club" in its first year. Led promotion, event planning and skills coaching; as of October 2025 the club's QQ group has grown past 800 members.</span>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 技能 / 证书及其他 ============ -->
+  <section class="section" id="skills">
+    <div class="wrap">
+      <h2 class="section-title">
+        <span class="zh">技能、证书及其他</span><span class="en">Skills, Certificates &amp; Interests</span>
+      </h2>
+
+      <div class="skill-grid">
+        <div class="skill-card reveal">
+          <h3 class="skill-label">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m8.5 17.5-5-5.5 5-5.5M15.5 6.5l5 5.5-5 5.5"/></svg>
+            <span class="zh">技能</span><span class="en">Skills</span>
+          </h3>
+          <p>
+            <span class="zh">熟练运用 Office、Python、Stata、PS 等软件；擅长数据分析、文案撰写、视觉设计、自媒体宣发。</span>
+            <span class="en">Proficient in Office, Python, Stata and Photoshop; strong in data analysis, copywriting, visual design and social-media outreach.</span>
+          </p>
+        </div>
+
+        <div class="skill-card reveal">
+          <h3 class="skill-label">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.8 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.8-3.9-9.2S9.4 5.4 12 2.8Z"/></svg>
+            <span class="zh">语言</span><span class="en">Languages</span>
+          </h3>
+          <p>
+            <span class="zh">英语：雅思 6.5 分，CET-6 571 分；第二届中译杯演讲大赛成都市一等奖。</span>
+            <span class="en">English: IELTS 6.5; CET-6 571. First Prize, Chengdu Division, 2nd China Translation Cup Speech Contest.</span>
+          </p>
+        </div>
+
+        <div class="skill-card reveal">
+          <h3 class="skill-label">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 20.5s-7.5-4.7-7.5-9.7a4.3 4.3 0 0 1 7.5-2.8 4.3 4.3 0 0 1 7.5 2.8c0 5-7.5 9.7-7.5 9.7Z"/></svg>
+            <span class="zh">兴趣爱好</span><span class="en">Interests</span>
+          </h3>
+          <p>
+            <span class="zh">极限飞盘（2022 年成都极限飞盘公开赛亚军）、素描（2022 年第十五届全国青少年书画大赛成年组金奖）。</span>
+            <span class="en">Ultimate frisbee (Runner-up, 2022 Chengdu Ultimate Open); sketching (Gold Award, Adult Group, 15th National Youth Calligraphy and Painting Competition, 2022).</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>
+      <span class="zh">© <span id="year"></span> 王馨语</span>
+      <span class="en">© <span class="year-en"></span> Wang Xinyu</span>
+    </p>
+    <p class="footer-links">
+      <a href="mailto:111@m.fudan.edu.cn">
+        <span class="zh">邮件联系</span><span class="en">Get in touch</span>
+      </a>
+    </p>
+  </div>
+</footer>
+
+<button id="to-top" class="to-top" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>
+</button>
+
+<script>
+/* ==========================================================================
+   交互脚本
+   1. 中英语言切换   2. 深浅色主题切换   3. 导航滚动高亮
+   4. 滚动进场动效   5. 回到顶部
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  /* ---------- 安全读写 localStorage（隐私模式下会抛错） ---------- */
+  function read(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function write(key, val) {
+    try { localStorage.setItem(key, val); } catch (e) {}
+  }
+
+  /* ---------- 1. 语言切换 ---------- */
+  var langBtn   = document.getElementById('lang-toggle');
+  var langLabel = langBtn && langBtn.querySelector('.lang-label');
+
+  function applyLang(lang) {
+    root.setAttribute('data-lang', lang);
+    root.setAttribute('lang', lang === 'en' ? 'en' : 'zh-CN');
+    // 按钮上显示的是「点击后会切换到的」语言
+    if (langLabel) langLabel.textContent = lang === 'en' ? '中' : 'EN';
+    if (langBtn) {
+      langBtn.setAttribute('aria-label',
+        lang === 'en' ? '切换为中文 / Switch to Chinese' : 'Switch to English / 切换为英文');
+    }
+  }
+
+  if (langBtn) {
+    langBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+      applyLang(next);
+      write('lang', next);
+    });
+  }
+
+  /* ---------- 2. 主题切换 ---------- */
+  var themeBtn = document.getElementById('theme-toggle');
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    if (themeBtn) {
+      themeBtn.setAttribute('aria-label',
+        theme === 'dark' ? '切换为浅色 / Switch to light' : '切换为深色 / Switch to dark');
+    }
+  }
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      write('theme', next);
+    });
+  }
+
+  // 用户没手动选过时，跟随系统深浅色设置
+  if (!read('theme') && window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    applyTheme(mq.matches ? 'dark' : 'light');
+    var onSchemeChange = function (e) { if (!read('theme')) applyTheme(e.matches ? 'dark' : 'light'); };
+    if (mq.addEventListener) mq.addEventListener('change', onSchemeChange);
+    else if (mq.addListener) mq.addListener(onSchemeChange);
+  }
+
+  /* ---------- 3. 导航：滚动阴影 + scrollspy ---------- */
+  var nav      = document.getElementById('nav');
+  var toTop    = document.getElementById('to-top');
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+
+  function onScroll() {
+    if (nav)   nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    if (toTop) toTop.classList.toggle('is-visible', window.scrollY > 400);
+  }
+  if (nav) window.addEventListener('scroll', onScroll, { passive: true });
+
+  if ('IntersectionObserver' in window && navLinks.length) {
+    var linkBySection = {};
+    navLinks.forEach(function (a) { linkBySection[a.getAttribute('href').slice(1)] = a; });
+
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var active = linkBySection[entry.target.id];
+        if (!active) return;
+        navLinks.forEach(function (a) { a.classList.remove('is-active'); });
+        active.classList.add('is-active');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+    Object.keys(linkBySection).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) spy.observe(el);
+    });
+  }
+
+  /* ---------- 4. 滚动进场动效 ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!('IntersectionObserver' in window) || reduceMotion) {
+    Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('is-in'); });
+  } else {
+    var revealObserver = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        obs.unobserve(entry.target);   // 只播一次
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+    Array.prototype.forEach.call(revealEls, function (el, i) {
+      el.style.transitionDelay = Math.min(i % 3, 2) * 70 + 'ms';
+      revealObserver.observe(el);
+    });
+  }
+
+  /* ---------- 5. 回到顶部 + 年份 ---------- */
+  if (toTop) {
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  }
+
+  var year = String(new Date().getFullYear());
+  var yearZh = document.getElementById('year');
+  if (yearZh) yearZh.textContent = year;
+  Array.prototype.forEach.call(document.querySelectorAll('.year-en'), function (el) {
+    el.textContent = year;
+  });
+
+  /* ---------- 初始化 ---------- */
+  applyLang(read('lang') === 'en' ? 'en' : 'zh');
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
